@@ -1,0 +1,879 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700&display=swap');
+@import "tailwindcss";
+
+body:has(#footer) .scroll-lines,
+body:has(#footer) .social-icons {
+  display: none;
+}
+/* ===================================================== 
+   INTRO COVER 
+===================================================== */
+
+.intro-cover {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background: #1f2130;
+
+  z-index: 9999;
+}
+
+
+/* ===================================================== 
+   CENTER CONTENT 
+===================================================== */
+
+.intro-content {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+
+/* ===================================================== 
+   NAME 
+===================================================== */
+
+.intro-name {
+  position: absolute;
+
+  margin: 0;
+
+  color: #fff;
+
+  font-family:
+    "Cooper Black",
+    "Cooper Black Std",
+    "Cooper",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      2.5rem,
+      5.3vw,
+      5.4rem
+    );
+
+  font-weight: 500;
+
+  letter-spacing: -0.045em;
+
+  line-height: 0.95;
+
+  white-space: nowrap;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  text-rendering:
+    geometricPrecision;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  -moz-osx-font-smoothing:
+    grayscale;
+}
+
+
+.name-letter {
+  display: inline-block;
+
+  will-change:
+    transform,
+    clip-path;
+
+  backface-visibility:
+    hidden;
+
+  transform-origin:
+    center center;
+
+  -webkit-font-smoothing:
+    antialiased;
+}
+
+
+.name-space {
+  display: inline-block;
+
+  width: 0.32em;
+}
+
+
+/* ===================================================== 
+   ROLE 
+===================================================== */
+
+.intro-role {
+  position: absolute;
+
+  margin: 0;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.86
+    );
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(
+      1rem,
+      1.4vw,
+      1.3rem
+    );
+
+  font-weight: 400;
+
+  letter-spacing: 0.18em;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  transform:
+    translateY(84px);
+
+  text-transform: uppercase;
+
+  text-rendering:
+    geometricPrecision;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  -moz-osx-font-smoothing:
+    grayscale;
+}
+
+
+.intro-role-text {
+  display: block;
+
+  width: max-content;
+
+  white-space: nowrap;
+
+  will-change:
+    transform,
+    opacity;
+
+  backface-visibility:
+    hidden;
+}
+
+
+/* =====================================================
+   5 PART HORIZONTAL TRANSITION
+===================================================== */
+
+.intro-transition {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: 100;
+}
+
+.intro-transition-part {
+  position: absolute;
+
+  left: 0;
+
+  width: 100%;
+  height: 20%;
+
+  background: #000;
+
+  visibility: visible;
+
+  will-change: transform;
+
+  transform: translateX(105%);
+}
+
+
+/* =====================================================
+   5 SECTIONS
+===================================================== */
+
+.part-1 {
+  top: 0;
+}
+
+.part-2 {
+  top: 20%;
+}
+
+.part-3 {
+  top: 40%;
+}
+
+.part-4 {
+  top: 60%;
+}
+
+.part-5 {
+  top: 80%;
+}
+
+
+/* ===================================================== 
+   MOBILE 
+===================================================== */
+
+@media (max-width: 768px) {
+
+
+  .intro-name {
+    font-size: 3.15rem;
+
+    letter-spacing: -0.04em;
+
+    line-height: 0.95;
+  }
+
+
+  .name-space {
+    width: 0.28em;
+  }
+
+
+  .intro-role {
+    font-size: 0.72rem;
+
+    letter-spacing: 0.16em;
+
+    transform:
+      translateY(60px);
+  }
+}
+
+
+
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+.home-nav-item {
+  will-change: transform, opacity;
+}
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.nav-link {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.94
+    );
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  transition:
+    opacity 0.25s ease;
+}
+
+
+.nav-link:hover {
+  opacity: 0.55;
+}
+
+
+/* =====================================================
+   RESUME
+===================================================== */
+
+.resume-button {
+  width: 115px;
+  height: 39px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #fff;
+
+  color: #111;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.8
+    );
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 16px;
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  box-shadow:
+    5px 5px 0
+    #404040;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.resume-button:hover {
+  transform:
+    translate(2px, 2px);
+
+  box-shadow:
+    3px 3px 0
+    rgba(
+      255,
+      255,
+      255,
+      0.15
+    );
+}
+
+
+/* =====================================================
+   HERO TITLE
+===================================================== */
+
+.title-wrapper {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+.hero-title {
+  font-family: "Oxanium", sans-serif;
+  font-size: clamp(85px, 8vw, 150px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 0.9;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* =====================================================
+   RIGHT INFORMATION
+===================================================== */
+
+.home-info {
+  will-change:
+    transform,
+    opacity;
+}
+
+
+/* VERTICAL LINE */
+
+.home-divider {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.72
+    );
+
+  transform-origin:
+    center;
+}
+
+
+/* =====================================================
+   INFO TITLE
+===================================================== */
+
+.info-title {
+  margin: 0 0 19px;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.95
+    );
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.info-description {
+  margin: 0;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.65
+    );
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 17px;
+
+  font-weight: 400;
+
+  line-height: 1.65;
+}
+
+
+/* =====================================================
+   STACK
+===================================================== */
+
+.info-stack {
+  margin-top: 17px;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.52
+    );
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+
+.info-stack span {
+  margin:
+    0 4px;
+}
+
+
+/* =====================================================
+   LEFT SCROLL
+===================================================== */
+
+.home-scroll {
+  will-change:
+    transform,
+    opacity;
+}
+
+
+.scroll-line {
+  display: block;
+
+  width: 25px;
+
+  height: 2px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.15
+    );
+}
+
+
+.scroll-active {
+  width: 40px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.52
+    );
+}
+
+
+.scroll-text {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.68
+    );
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 400;
+
+  letter-spacing:
+    0.42em;
+
+  writing-mode:
+    vertical-rl;
+
+  white-space: nowrap;
+}
+
+
+.scroll-long-line {
+  width: 1px;
+  height: 60px;
+  margin-top: 12px;
+  background: #fff;
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 60%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 60%,
+    transparent 100%
+  );
+}
+
+
+/* =====================================================
+   SOCIAL
+===================================================== */
+
+.home-social {
+  will-change:
+    transform,
+    opacity;
+}
+
+
+.social-button {
+  width: 45px;
+
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.18
+    );
+
+  border-radius: 50%;
+
+  background:
+    rgba(
+      10,
+      10,
+      10,
+      0.85
+    );
+
+  color: #fff;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.social-button:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.55
+    );
+}
+
+
+/* =====================================================
+   LINKEDIN
+===================================================== */
+
+.linkedin-icon {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+  letter-spacing: -1px;
+}
+
+
+.title-wrapper {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-title {
+  will-change: transform;
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .hero-title {
+    font-size: 9.5vw;
+  }
+
+  .home-divider {
+    margin-right: 5vw;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  /* -----------------------------------------------
+     LOGO
+  ------------------------------------------------ */
+
+  
+
+
+
+  /* -----------------------------------------------
+     NAVBAR
+  ------------------------------------------------ */
+
+  nav {
+    padding-left: 6vw !important;
+    padding-right: 6vw !important;
+  }
+
+
+  .resume-button {
+    width: 115px;
+
+    height: 43px;
+
+    font-size: 15px;
+  }
+
+
+  /* -----------------------------------------------
+     HERO
+  ------------------------------------------------ */
+
+  .hero-title {
+    font-size: 14vw;
+
+    letter-spacing: 0.025em;
+  }
+
+
+  .title-wrapper {
+    height: 100px;
+  }
+
+
+  /* -----------------------------------------------
+     GRID
+  ------------------------------------------------ */
+
+  section > div > div {
+    grid-template-columns: 1fr !important;
+  }
+
+
+  /* -----------------------------------------------
+     INFO
+  ------------------------------------------------ */
+
+  .home-info {
+    margin-top: 55px;
+  }
+
+
+  .home-divider {
+    display: none;
+  }
+
+
+  .info-title {
+    font-size: 19px;
+  }
+
+
+  .info-description {
+    font-size: 17px;
+  }
+
+
+  .info-stack {
+    font-size: 14px;
+  }
+
+
+  /* -----------------------------------------------
+     SOCIAL
+  ------------------------------------------------ */
+
+  .social-button {
+    width: 48px;
+
+    height: 48px;
+  }
+
+}
+
+
+
+
+.showcase-hover {
+  cursor: pointer;
+  z-index: 20;
+}
+
+.showcase-text {
+  display: block;
+
+  white-space: nowrap;
+
+  font-size: clamp(3.5rem, 8vw, 8.5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+
+  /* NORMAL */
+  color: transparent;
+
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.32);
+
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.18),
+    0 0 18px rgba(255, 255, 255, 0.08);
+
+  transition:
+    -webkit-text-fill-color 0.2s ease,
+    color 0.2s ease,
+    -webkit-text-stroke 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+/* CURSOR ON SHOWCASE */
+.showcase-hover:hover .showcase-text {
+  color: #ffffff !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-text-stroke: 1.5px #ffffff !important;
+
+}
+
+
+
