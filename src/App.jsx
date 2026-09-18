@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import IntroCover from "./components/IntroCover";
+import IntroCover from "./components/introCover";
 import Home from "./components/Home";
 import About from "./components/About";
 import Skills from "./components/Skills";
