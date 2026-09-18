@@ -304,7 +304,25 @@ export default function Footer() {
               <a href="#projects" className="transition-colors hover:text-white">
                 Projects
               </a>
-              <a href="#contact" className="transition-colors hover:text-white">
+              <a
+
+                href="#contact"
+                className="transition-colors hover:text-white"
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  const contactSection = document.querySelector(
+                    '[data-scroll-section="7"]'
+                  );
+
+                  if (contactSection) {
+                    window.scrollTo({
+                      top: contactSection.offsetTop,
+                      behavior: "auto", // instant — no visible manual scroll
+                    });
+                  }
+                }}
+              >
                 Contact
               </a>
             </nav>
