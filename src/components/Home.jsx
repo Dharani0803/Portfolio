@@ -325,7 +325,7 @@ export default function Home() {
               <img
                 src="/logo.png"
                 alt="DK Dharani"
-                className="block h-auto w-[130px] object-contain opacity-80 transition-opacity duration-200 hover:opacity-100"
+                className="block h-auto w-[75px] object-contain opacity-80 transition-opacity duration-200 hover:opacity-100"
               />
             </div>
 
@@ -352,6 +352,13 @@ export default function Home() {
                 className="home-nav-item nav-link"
               >
                 Projects
+              </a>
+
+              <a
+                href="#services"
+                className="home-nav-item nav-link"
+              >
+                Services
               </a>
 
               <a

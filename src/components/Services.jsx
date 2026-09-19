@@ -201,7 +201,7 @@ gsap.fromTo(
 
   return (
     <section
-      id="what-i-offer"
+      id="services"
       className="relative w-full bg-transparent text-white"
     >
       {/* ================= TITLE ================= */}

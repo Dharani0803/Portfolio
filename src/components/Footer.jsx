@@ -279,14 +279,14 @@ export default function Footer() {
           <div className="h-px w-full bg-white/15" />
 
           {/* BOTTOM CONTENT */}
-          <div className="grid grid-cols-3 items-center">
+          <div className="grid grid-cols-3 items-center py-[20px]">
 
             {/* LOGO */}
             <div className="flex items-center">
               <img
               src="/logo.png"
               alt="DK Dharani"
-              className="block h-auto w-[90px] object-contain opacity-80 transition-opacity duration-200 hover:opacity-100"
+              className="block h-auto w-[50px] object-contain opacity-80 transition-opacity duration-200 hover:opacity-100"
             />
             </div>
 
@@ -303,6 +303,9 @@ export default function Footer() {
               </a>
               <a href="#projects" className="transition-colors hover:text-white">
                 Projects
+              </a>
+              <a href="#services" className="transition-colors hover:text-white">
+                Services
               </a>
               <a
 
