@@ -1,6 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
-import ShootingStars from "./ui/shootingstars"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ShootingStars from "./ui/shootingstars";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const icon = (name, color = "ffffff") =>
   `https://cdn.simpleicons.org/${name}/${color}`;
@@ -44,114 +47,98 @@ export default function Skills() {
   const sectionRef = useRef(null);
   const wordRef = useRef(null);
 
-  useEffect(() => {
-  const ctx = gsap.context(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 82%",
-        once: true,
-      },
-    });
+  useLayoutEffect(() => {
+    let interval;
 
-    tl.fromTo(
-      ".skills-ghost",
-      { y: 60, opacity: 0 },
-      {
-        y: 0,
-        opacity: 0.055,
-        duration: 1.1,
-        ease: "power3.out",
-      }
-    )
+    const ctx = gsap.context(() => {
+      // Everything starts together (position parameter = offset from start),
+      // so the whole reveal finishes in ~1 second instead of ~3.
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 95%",
+            once: true,
+          },
+        })
+        .fromTo(
+          ".skills-ghost",
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 0.055, duration: 0.7, ease: "power3.out" },
+          0
+        )
+        .fromTo(
+          ".skills-title",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+          0.05
+        )
+        .fromTo(
+          ".skills-divider",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.5, ease: "power3.out" },
+          0.15
+        )
+        .fromTo(
+          ".skills-learning",
+          { y: 16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" },
+          0.2
+        )
+        .fromTo(
+          ".skill-pill",
+          { y: 16, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.012,
+            ease: "power3.out",
+          },
+          0.25
+        );
 
-      .fromTo(
-        ".skills-title",
-        { y: 25, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.65"
-      )
+      // Rotating word
+      const words = ["IMPROVE", "LEARN", "ADAPT", "GROW"];
+      let index = 0;
 
-      .fromTo(
-        ".skills-divider",
-        { scaleX: 0, opacity: 0 },
-        {
-          scaleX: 1,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power3.out",
-        },
-        "-=0.45"
-      )
+      const changeWord = () => {
+        if (!wordRef.current) return;
 
-      .fromTo(
-        ".skills-learning",
-        { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      )
-
-      .fromTo(
-        ".skill-pill",
-        {
-          y: 20,
+        gsap.to(wordRef.current, {
+          y: -10,
           opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.55,
-          stagger: 0.018,
-          ease: "power3.out",
-        },
-        "-=0.25"
-      );
+          duration: 0.22,
+          ease: "power2.in",
+          onComplete: () => {
+            if (!wordRef.current) return;
 
-    // Rotating word
-    const words = ["IMPROVE", "LEARN", "ADAPT", "GROW"];
-    let index = 0;
+            index = (index + 1) % words.length;
+            wordRef.current.textContent = words[index];
 
-    const changeWord = () => {
-      gsap.to(wordRef.current, {
-        y: -10,
-        opacity: 0,
-        duration: 0.22,
-        ease: "power2.in",
-        onComplete: () => {
-          index = (index + 1) % words.length;
-          wordRef.current.textContent = words[index];
+            gsap.fromTo(
+              wordRef.current,
+              { y: 10, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.22,
+                ease: "power2.out",
+              }
+            );
+          },
+        });
+      };
 
-          gsap.fromTo(
-            wordRef.current,
-            { y: 10, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.22,
-              ease: "power2.out",
-            }
-          );
-        },
-      });
+      interval = setInterval(changeWord, 2200);
+    }, sectionRef);
+
+    return () => {
+      clearInterval(interval);
+      ctx.revert();
     };
+  }, []);
 
-    const interval = setInterval(changeWord, 2200);
-
-    return () => clearInterval(interval);
-  }, sectionRef);
-
-  return () => ctx.revert();
-}, []);
   return (
     <section
       ref={sectionRef}
@@ -178,7 +165,8 @@ export default function Skills() {
         "
       >
         SKILLS
-      </div><ShootingStars/>
+      </div>
+      <ShootingStars />
 
       <div
         className="
@@ -212,71 +200,71 @@ export default function Skills() {
 
         {/* DIVIDER */}
         <div className="skills-divider mt-[55px] flex w-full max-w-[520px] items-center">
-  {/* LEFT */}
-  <div className="relative flex-1">
-    <div className="h-[1px] w-full bg-white/[0.10]" />
+          {/* LEFT */}
+          <div className="relative flex-1">
+            <div className="h-[1px] w-full bg-white/[0.10]" />
 
-    <span className="absolute left-0 top-1/2 -translate-y-1/2">
-      <span
-        className="block h-0 w-0"
-        style={{
-          borderTop: "5px solid transparent",
-          borderBottom: "5px solid transparent",
-          borderRight: "10px solid rgba(255,255,255,0.10)",
-        }}
-      />
-    </span>
-  </div>
+            <span className="absolute left-0 top-1/2 -translate-y-1/2">
+              <span
+                className="block h-0 w-0"
+                style={{
+                  borderTop: "5px solid transparent",
+                  borderBottom: "5px solid transparent",
+                  borderRight: "10px solid rgba(255,255,255,0.10)",
+                }}
+              />
+            </span>
+          </div>
 
-  {/* CENTER */}
-  <div className="relative z-10 mx-[10px] h-[22px] w-[52px]">
-    <span
-      className="
-        absolute
-        left-[7px]
-        top-1/2
-        h-[17px]
-        w-[17px]
-        -translate-y-1/2
-        rotate-45
-        border
-        border-white/65
-        bg-black
-      "
-    />
+          {/* CENTER */}
+          <div className="relative z-10 mx-[10px] h-[22px] w-[52px]">
+            <span
+              className="
+                absolute
+                left-[7px]
+                top-1/2
+                h-[17px]
+                w-[17px]
+                -translate-y-1/2
+                rotate-45
+                border
+                border-white/65
+                bg-black
+              "
+            />
 
-    <span
-      className="
-        absolute
-        right-[7px]
-        top-1/2
-        h-[17px]
-        w-[17px]
-        -translate-y-1/2
-        rotate-45
-        border
-        border-white/65
-        bg-black
-      "
-    />
-  </div>
+            <span
+              className="
+                absolute
+                right-[7px]
+                top-1/2
+                h-[17px]
+                w-[17px]
+                -translate-y-1/2
+                rotate-45
+                border
+                border-white/65
+                bg-black
+              "
+            />
+          </div>
 
-  {/* RIGHT */}
-  <div className="relative flex-1">
-    <div className="h-[1px] w-full bg-white/[0.10]" />
+          {/* RIGHT */}
+          <div className="relative flex-1">
+            <div className="h-[1px] w-full bg-white/[0.10]" />
 
-    <span className="absolute right-0 top-1/2 -translate-y-1/2">
-      <span
-        className="block h-0 w-0"
-        style={{
-          borderTop: "5px solid transparent",
-          borderBottom: "5px solid transparent",
-          borderLeft: "10px solid rgba(255,255,255,0.10)",
-        }}
-      />
-    </span>
-  </div>
-</div>
+            <span className="absolute right-0 top-1/2 -translate-y-1/2">
+              <span
+                className="block h-0 w-0"
+                style={{
+                  borderTop: "5px solid transparent",
+                  borderBottom: "5px solid transparent",
+                  borderLeft: "10px solid rgba(255,255,255,0.10)",
+                }}
+              />
+            </span>
+          </div>
+        </div>
 
         {/* LEARNING TEXT */}
         <div

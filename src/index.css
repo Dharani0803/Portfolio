@@ -5,6 +5,10 @@ body:has(#footer) .scroll-lines,
 body:has(#footer) .social-icons {
   display: none;
 }
+
+html, body {
+  overflow-x: hidden;
+}
 /* ===================================================== 
    INTRO COVER 
 ===================================================== */

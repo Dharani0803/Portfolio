@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ShootingStars from "./ui/shootingstars";
 
 export default function About() {
@@ -7,115 +8,107 @@ export default function About() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const section = aboutRef.current;
+      const q = gsap.utils.selector(aboutRef);
 
-      const heading = section.querySelector(".about-heading");
-      const orangeLine = section.querySelector(".about-line");
-      const intro = section.querySelector(".about-intro");
-      const image = section.querySelector(".about-image");
-      const aboutTitle = section.querySelector(".about-title");
-      const paragraphs = section.querySelectorAll(".about-paragraph");
-
-      // Initial states
-      gsap.set(heading, {
+      // =====================================================
+      // BLOCK 1: heading + orange line + intro
+      // =====================================================
+      gsap.set(q(".about-heading, .about-intro"), {
         opacity: 0,
-        y: 35,
+        y: 24,
       });
 
-      gsap.set(orangeLine, {
+      gsap.set(q(".about-line"), {
         opacity: 0,
         scaleX: 0,
         transformOrigin: "left center",
       });
 
-      gsap.set(intro, {
-        opacity: 0,
-        y: 25,
-      });
-
-      gsap.set(image, {
-        opacity: 0,
-        y: 40,
-        scale: 0.96,
-      });
-
-      gsap.set(aboutTitle, {
-        opacity: 0,
-        y: 25,
-      });
-
-      gsap.set(paragraphs, {
-        opacity: 0,
-        y: 22,
-      });
-
-      // Reveal when About enters viewport
-      const trigger = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top 82%",
-          once: true,
-        },
-      });
-
-      trigger
-        .to(heading, {
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: q(".about-heading")[0],
+            start: "top 95%",
+            once: true,
+          },
+        })
+        .to(q(".about-heading"), {
           opacity: 1,
           y: 0,
-          duration: 0.7,
+          duration: 0.45,
           ease: "power3.out",
         })
         .to(
-          orangeLine,
+          q(".about-line"),
           {
             opacity: 1,
             scaleX: 1,
-            duration: 0.6,
+            duration: 0.4,
             ease: "power3.out",
           },
-          "-=0.35"
+          0.1
         )
         .to(
-          intro,
+          q(".about-intro"),
           {
             opacity: 1,
             y: 0,
-            duration: 0.65,
+            duration: 0.45,
             ease: "power3.out",
           },
-          "-=0.25"
-        )
+          0.15
+        );
+
+      // =====================================================
+      // BLOCK 2: photo + ABOUT ME + paragraphs
+      // Own trigger, so it doesn't wait for block 1 to finish
+      // =====================================================
+      gsap.set(q(".about-image"), {
+        opacity: 0,
+        y: 30,
+        scale: 0.97,
+      });
+
+      gsap.set(q(".about-title, .about-paragraph"), {
+        opacity: 0,
+        y: 18,
+      });
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: q(".about-image")[0],
+            start: "top 92%",
+            once: true,
+          },
+        })
+        .to(q(".about-image"), {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          ease: "power3.out",
+        })
         .to(
-          image,
+          q(".about-title"),
           {
             opacity: 1,
             y: 0,
-            scale: 1,
-            duration: 0.8,
+            duration: 0.4,
             ease: "power3.out",
           },
-          "-=0.15"
+          0.1
         )
         .to(
-          aboutTitle,
+          q(".about-paragraph"),
           {
             opacity: 1,
             y: 0,
-            duration: 0.55,
+            duration: 0.45,
             ease: "power3.out",
+            stagger: 0.08,
           },
-          "-=0.45"
-        )
-        .to(
-          paragraphs,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power3.out",
-            stagger: 0.18,
-          },
-          "-=0.2"
+          0.2
         );
     }, aboutRef);
 
@@ -274,6 +267,7 @@ export default function About() {
             <img
               src="/about-photo.jpeg"
               alt="Dharani"
+              onLoad={() => ScrollTrigger.refresh()}
               className="
                 w-full
                 h-full

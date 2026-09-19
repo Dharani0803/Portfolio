@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import gsap from "gsap"; 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroCover from "./components/IntroCover";
 import Home from "./components/Home";
 import About from "./components/About";
@@ -11,10 +13,20 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import "./index.css";
 import { NetworkGlobe } from "./components/ui/network-globe";
+gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const [introFinished, setIntroFinished] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+
+  // Recalculate all ScrollTrigger positions AFTER the sections have mounted.
+  // (The old requestAnimationFrame refresh could run before React rendered them.)
+  useEffect(() => {
+    if (!introFinished) return;
+
+    const t = setTimeout(() => ScrollTrigger.refresh(), 150);
+    return () => clearTimeout(t);
+  }, [introFinished]);
 
   useEffect(() => {
     if (!introFinished) return;
@@ -22,29 +34,21 @@ export default function App() {
     const sections = document.querySelectorAll("[data-scroll-section]");
 
     const handleScroll = () => {
-      const scrollPosition =
-        window.scrollY + window.innerHeight * 0.5;
-
-      let currentSection = 0;
-
-      // Home always active at top
       if (window.scrollY < 50) {
-        currentSection = 0;
-      } else {
-        sections.forEach((section) => {
-          const top = section.offsetTop;
-          const bottom = top + section.offsetHeight;
-
-          if (
-            scrollPosition >= top &&
-            scrollPosition < bottom
-          ) {
-            currentSection = Number(
-              section.dataset.scrollSection
-            );
-          }
-        });
+        setActiveSection(0);
+        return;
       }
+      const scrollPosition = window.scrollY + window.innerHeight * 0.5;
+      let currentSection = 0;
+      let bestTop = -Infinity;
+
+      sections.forEach((section) => {
+        const top = section.offsetTop;
+        if (top <= scrollPosition && top > bestTop) {
+          bestTop = top;
+          currentSection = Number(section.dataset.scrollSection);
+        }
+      });
 
       setActiveSection(currentSection);
     };
@@ -62,7 +66,7 @@ export default function App() {
       <style>{`
         html,
         body {
-          overflow-x: hidden;
+          overflow-x: clip;
         }
 
         ::-webkit-scrollbar:horizontal {
@@ -105,9 +109,7 @@ export default function App() {
         )}
 
         {!introFinished ? (
-          <IntroCover
-            onFinished={() => setIntroFinished(true)}
-          />
+          <IntroCover onFinished={() => setIntroFinished(true)} />
         ) : (
           <>
             {/* HOME */}
@@ -149,19 +151,19 @@ export default function App() {
             </div>
 
             {/* CONTACT */}
-<div data-scroll-section="7" className="relative z-10">
-  <div className="h-screen w-full bg-[#11131d]" />
+            <div data-scroll-section="7" className="relative z-10">
+              <div className="h-screen w-full bg-[#11131d]" />
 
-  <div
-    className={`fixed inset-0 z-50 h-screen w-full transition-all duration-700 ease-out ${
-      activeSection === 7
-        ? "opacity-100 translate-y-0 pointer-events-auto"
-        : "opacity-0 translate-y-10 pointer-events-none"
-    }`}
-  >
-    <Contact />
-  </div>
-</div>
+              <div
+                className={`fixed inset-0 z-50 h-screen w-full transition-all duration-700 ease-out ${
+                  activeSection === 7
+                    ? "opacity-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 translate-y-10 pointer-events-none"
+                }`}
+              >
+                <Contact />
+              </div>
+            </div>
 
             {/* FOOTER
                 Section 8 = Footer */}
